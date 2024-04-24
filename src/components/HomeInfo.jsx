@@ -23,15 +23,17 @@ const HomeInfo = ({ currentStage }) => {
         <img
           src="/src/assets/icons/x-mark.svg"
           alt="close"
-          className="absolute top-2 right-2 w-[20px] h-[20px] cursor-pointer pointer-events-auto"
+          width={24}
+          height={24}
+          className="absolute top-2 right-2 w-[24px] h-[24px] cursor-pointer pointer-events-auto"
         />
-        <h1 className="sm:text-xl sm:leading-snug text-center  py-4 px-8 text-white mx-5">
+        <h1 className="sm:text-xl sm:leading-snug text-sm text-center  py-2 px-1 text-white ">
           Hi, I'm
           <span className="font-semibold mx-2 text-purple-600">Anatolii</span>
           👋
           <br />A Full Stack Developer from Ukraine 🇺🇦
         </h1>
-        <p>
+        <p className="sm:text-base sm:leading-slug text-xs  text-center  py-2 px-1 ">
           Now you are in my portfolio. You are actually in a spacecraft, which
           is inside a huge staircase. Why inside a staircase? Because for many
           years, I designed concrete stairs. But now I'm moving on to something

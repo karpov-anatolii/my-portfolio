@@ -29,12 +29,21 @@ import {
   aws,
   nginx,
   docker,
+  _3dmax,
+  figma,
+  blender,
+  archicad,
 } from "../assets/icons";
 
 export const skills = [
   {
     imageUrl: css,
     name: "CSS",
+    type: "Frontend",
+  },
+  {
+    imageUrl: figma,
+    name: "Figma",
     type: "Frontend",
   },
   {
@@ -93,6 +102,22 @@ export const skills = [
     name: "Three.js",
     type: "3D Animation",
   },
+  {
+    imageUrl: _3dmax,
+    name: "3dsMax",
+    type: "3D Animation",
+  },
+  {
+    imageUrl: blender,
+    name: "Blender",
+    type: "3D Animation",
+  },
+  {
+    imageUrl: archicad,
+    name: "ArchiCad",
+    type: "Building Information Modeling",
+  },
+
   {
     imageUrl: mui,
     name: "Material-UI",

@@ -31,8 +31,15 @@ import postgresql from "./postgresql.svg";
 import aws from "./aws.svg";
 import nginx from "./nginx.svg";
 import docker from "./docker.svg";
+import _3dmax from "./3dmax.svg";
+import figma from "./figma.svg";
+import blender from "./blender.svg";
+import archicad from "./archicad.svg";
 
 export {
+  archicad,
+  blender,
+  figma,
   css,
   express,
   git,
@@ -66,4 +73,5 @@ export {
   aws,
   nginx,
   docker,
+  _3dmax,
 };

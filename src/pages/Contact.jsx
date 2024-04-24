@@ -1,7 +1,6 @@
 import emailjs from "@emailjs/browser";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef, useState } from "react";
-import Girl from "../models/Girl";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Planet } from "../models";
 import useAlert from "../hooks/useAlert";
 import { Alert, Loader } from "../components";
@@ -18,13 +17,9 @@ const Contact = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleFocus = () => setCurrentAnimation("walk");
-  const handleBlur = () => setCurrentAnimation("idle");
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    setCurrentAnimation("hit");
 
     emailjs
       .send(
@@ -51,7 +46,7 @@ const Contact = () => {
 
           setTimeout(() => {
             hideAlert(false);
-            setCurrentAnimation("idle");
+
             setForm({
               name: "",
               email: "",
@@ -62,13 +57,16 @@ const Contact = () => {
         (error) => {
           setLoading(false);
           console.error(error);
-          setCurrentAnimation("idle");
 
           showAlert({
             show: true,
             text: "I didn't receive your message 😢",
             type: "danger",
           });
+
+          setTimeout(() => {
+            hideAlert(false);
+          }, [3000]);
         }
       );
   };
@@ -121,8 +119,6 @@ const Contact = () => {
                 required
                 value={form.name}
                 onChange={handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
               />
             </label>
             <label className="text-black-500 font-semibold">
@@ -135,8 +131,6 @@ const Contact = () => {
                 required
                 value={form.email}
                 onChange={handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
               />
             </label>
             <label className="text-black-500 font-semibold">
@@ -148,18 +142,10 @@ const Contact = () => {
                 placeholder="Write your thoughts here..."
                 value={form.message}
                 onChange={handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
               />
             </label>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn"
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            >
+            <button type="submit" disabled={loading} className="btn">
               {loading ? "Sending..." : "Submit"}
             </button>
           </form>

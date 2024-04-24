@@ -42,8 +42,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className={`hologram flex flex-col gap-3 rounded-lg shadow-lg p-4`}>
-      <div className="flex text-lg gap-3">
+    <div
+      className={`hologram flex flex-col gap-3 rounded-lg shadow-lg sm:p-4 p-2`}
+    >
+      <div className="flex sm:text-lg text-sm gap-3">
         <button
           className={`btn-dashboard ${fly ? "active" : ""} `}
           onClick={handleStart}

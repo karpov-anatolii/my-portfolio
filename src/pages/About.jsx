@@ -8,8 +8,10 @@ import { experiences, skills } from "../constants";
 
 import "react-vertical-timeline-component/style.min.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const About = () => {
+  const [skillIsHovered, setSkillIsHovered] = useState("");
   return (
     <section className=" max-container">
       <div className="bg"></div>
@@ -37,7 +39,19 @@ const About = () => {
 
           <div className="mt-16 flex flex-wrap gap-12">
             {skills.map((skill) => (
-              <div className="block-container w-20 h-20" key={skill.name}>
+              <div
+                className="block-container w-20 h-20 relative"
+                onMouseEnter={() => setSkillIsHovered(skill.name)}
+                onMouseLeave={() => setSkillIsHovered("")}
+                key={skill.name}
+              >
+                <div
+                  className={`p-2 absolute left-[50%] translate-x-[-50%] top-0 w-fit rounded-lg  z-50 bg-purple-600/70 text-white ${
+                    skillIsHovered === skill.name ? "block" : "hidden"
+                  }`}
+                >
+                  {skill.name}
+                </div>
                 <div className="btn-back rounded-xl" />
                 <div className="btn-front rounded-xl flex justify-center items-center">
                   <img
@@ -58,7 +72,7 @@ const About = () => {
             <VerticalTimeline>
               {experiences.map((experience, index) => (
                 <VerticalTimelineElement
-                  key={experience.company_name}
+                  key={index}
                   date={experience.date}
                   iconStyle={{ background: experience.iconBg }}
                   icon={
@@ -78,19 +92,16 @@ const About = () => {
                   }}
                 >
                   <div>
-                    <h3 className="text-black text-xl font-kode font-semibold">
+                    <h3 className="text-black sm:text-xl text-lg font-kode font-semibold">
                       {experience.title}
                     </h3>
-                    <p
-                      className="text-black-500 font-medium text-base"
-                      style={{ margin: 0 }}
-                    >
+                    <p className="!my-3  text-black-500 font-semibold ">
                       {experience.company_name}
                     </p>
                   </div>
 
-                  <ul className="my-5 list-disc ml-5 space-y-2">
-                    {experience.points.map((point, index) => {
+                  <ul className="sm:my-5 m-0 sm:list-disc list-none  space-y-2">
+                    {experience.points.map((point, index2) => {
                       const regex =
                         /(.*?)<Link to='([^']*)'>(.*?)<\/Link>(.*?)/;
                       const match = point.match(regex);
@@ -103,8 +114,8 @@ const About = () => {
 
                         return (
                           <li
-                            key={`experience-point-${index}`}
-                            className="text-black-500/80 font-normal pl-1 text-sm"
+                            key={index2 + index}
+                            className="experience-content "
                           >
                             {beforeText}
                             <Link
@@ -115,15 +126,17 @@ const About = () => {
                               {linkSiteName}
                             </Link>
                             {afterText}
+                            <hr className="w-[80%] my-3 m-auto  block sm:hidden" />
                           </li>
                         );
                       } else
                         return (
                           <li
-                            key={`experience-point-${index}`}
-                            className="text-black-500/80 font-normal pl-1 text-sm"
+                            key={index2 + index}
+                            className="experience-content"
                           >
                             {point}
+                            <hr className="w-[80%] my-3 m-auto  block sm:hidden" />
                           </li>
                         );
                     })}

@@ -16,7 +16,7 @@ const Projects = () => {
           </span>
         </h1>
 
-        <p className=" mt-2 leading-relaxed">
+        <p className=" mt-4 leading-relaxed">
           In my personal projects, I have demonstrated my ability to plan and
           design projects using tools like Figma, host applications on AWS or
           Vercel, and conduct real-user testing. My technical skills include
@@ -28,18 +28,18 @@ const Projects = () => {
 
         <div className="flex flex-wrap my-20 gap-16">
           {[...projects].reverse().map((project) => (
-            <div className="lg:w-[400px] w-full" key={project.name}>
+            <div className=" w-full" key={project.name}>
               <div className="mt-5 flex flex-col">
                 <h3 className="text-2xl text-white font-kode font-semibold">
                   {project.name}
                 </h3>
-                <p className="mt-2">{project.description}</p>
+                <p className="mt-4">{project.description}</p>
                 <div className="mt-5 flex items-center gap-2 font-kode">
                   <Link
                     to={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-semibold text-blue-600"
+                    className="font-semibold text-purple-600"
                   >
                     Live Link
                   </Link>

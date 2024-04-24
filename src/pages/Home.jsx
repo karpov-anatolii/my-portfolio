@@ -121,9 +121,9 @@ const Home = () => {
             scale={biplaneScale}
           /> */}
           <SpaceStation
-            position={[0, 500, -1000]}
-            rotation={[0, 0, 0]}
-            scale={[1, 1, 1]}
+            position={[0, 1000, -3600]}
+            rotation={[20, 50, 0]}
+            scale={[2, 2, 2]}
           />
           <Staircase
             position={[0, 0, 0]}
@@ -132,7 +132,7 @@ const Home = () => {
           />
 
           <Planet
-            position={[0, 0, -1700]}
+            position={[0, 0, -4400]}
             rotation={[0, 0, 0]}
             scale={[1000, 1000, 1000]}
           />

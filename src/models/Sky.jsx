@@ -16,6 +16,8 @@ export function Sky({ isRotating }) {
 
   const lastX = useRef(0);
   const lastY = useRef(0);
+  const degreeBeta = useRef(0);
+  const degreeGamma = useRef(0);
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
   const koefRotation = 0.01;
@@ -35,13 +37,26 @@ export function Sky({ isRotating }) {
     setLocation,
   } = useContext(DashboardContext);
   let camSpeed = speed;
-  const [beyondAlert, setBeyondAlert] = useState(false);
+  const [isMouseClick, setIsMouseClick] = useState(false);
   const maxRadiusCameraPosition = 4500;
   const targetCameraPosition = [0, 0, 0];
-  const handleMouseDown = (event) => {
-    event.stopPropagation();
-    setFly(!fly);
-  };
+
+  function handleMouseDown() {
+    setIsMouseClick(true);
+  }
+
+  function handleClick(event) {
+    if (isMouseClick) {
+      event.stopPropagation();
+      setFly(!fly);
+    }
+    setIsMouseClick(false);
+  }
+
+  // const handleMouseDown = (event) => {
+  //   event.stopPropagation();
+  //   setFly(!fly);
+  // };
 
   const handleContextMenu = (event) => {
     event.stopPropagation();
@@ -61,7 +76,6 @@ export function Sky({ isRotating }) {
   };
   const handlePointerMove = (event) => {
     event.stopPropagation();
-    // event.preventDefault();
     const clientX = event.touches ? event.touches[0].clientX : event.clientX;
     const clientY = event.touches ? event.touches[0].clientY : event.clientY;
     lastX.current = clientX;
@@ -73,15 +87,29 @@ export function Sky({ isRotating }) {
       ((lastY.current - centerY) / window.innerHeight) * koefRotation;
   };
 
+  function handleOrientation(event) {
+    const { beta, gamma } = event;
+    // event.beta represents the front-to-back tilt in degrees
+    // event.gamma represents the left-to-right tilt in degrees
+    // Normalize beta and gamma values to be in the range [-90, 90] degrees
+    degreeBeta.current = Math.max(-90, Math.min(beta, 90));
+    degreeGamma.current = Math.max(-90, Math.min(gamma, 90));
+
+    // Calculate rotation based on beta and gamma values
+    speedRotationY.current = (degreeGamma.current / 90) * koefRotation;
+    speedRotationX.current = (degreeBeta.current / 90) * koefRotation;
+  }
+
   useEffect(() => {
     if (fly) camSpeed = speed;
     else camSpeed = 0;
     const canvas = gl.domElement;
     canvas.addEventListener("mousedown", handleMouseDown);
+    canvas.addEventListener("click", handleClick);
     canvas.addEventListener("contextmenu", handleContextMenu);
     window.addEventListener("wheel", handleWheel);
     canvas.addEventListener("pointermove", handlePointerMove);
-
+    window.addEventListener("deviceorientation", handleOrientation);
     // canvas.addEventListener("pointerdown", handlePointerDown);
     // canvas.addEventListener("pointerup", handlePointerUp);
     // canvas.addEventListener("pointermove", handlePointerMove);
@@ -94,9 +122,11 @@ export function Sky({ isRotating }) {
     // Remove event listeners when component unmounts
     return () => {
       canvas.removeEventListener("mousedown", handleMouseDown);
+      canvas.removeEventListener("click", handleClick);
       canvas.removeEventListener("contextmenu", handleContextMenu);
       window.removeEventListener("wheel", handleWheel);
       canvas.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("deviceorientation", handleOrientation);
       // canvas.removeEventListener("pointerdown", handlePointerDown); // Pointer Events API
       // canvas.removeEventListener("pointerup", handlePointerUp);
       // canvas.removeEventListener("pointermove", handlePointerMove);
@@ -136,7 +166,7 @@ export function Sky({ isRotating }) {
     camera.translateZ(-camSpeed / 2);
 
     if (orbitMode) {
-      camera.translateX(2);
+      camera.translateX(3);
     }
 
     setLocation([camera.position.x, camera.position.y, camera.position.z]);

@@ -24,6 +24,7 @@ body:has(.card[data-color="green"]:hover) {
 
 .hologram {
   position: relative;
+  z-index: 10;
   /* width: fit-content; */
   /* height: auto; */
   font-family: "Kode Mono", monospace;
@@ -168,6 +169,10 @@ body:has(.card[data-color="green"]:hover) {
 }
 
 @layer utilities {
+  .experience-content {
+    @apply !mb-4 text-black-500/80 font-normal pl-1 sm:text-sm text-xs;
+  }
+
   nav {
     @apply hologram flex text-lg gap-7 font-medium rounded-lg shadow-lg px-4 py-2 max-lg:hidden;
   }
@@ -186,7 +191,7 @@ body:has(.card[data-color="green"]:hover) {
     @apply absolute top-[-10px] left-[-20px] right-[-10px] bottom-[-10px] bg-[url('/src/assets/images/milky_way_small.jpg')] bg-cover bg-center;
   }
   .btn-dashboard {
-    @apply text-purple-700 font-bold py-2 px-4 border border-purple-700 rounded-md;
+    @apply text-purple-700 font-bold py-2 sm:px-4 px-1.5  border border-purple-700 rounded-md;
   }
   .btn-dashboard.active {
     @apply text-orange-500  border-orange-500;
@@ -202,7 +207,7 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .about-container {
-    @apply w-full h-full overflow-y-auto;
+    @apply w-full h-full overflow-y-auto break-words;
   }
 
   .head-text {
@@ -254,7 +259,7 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .cta-text {
-    @apply text-black-500 font-extrabold flex-1 text-3xl max-md:text-center;
+    @apply text-black-500 font-extrabold flex-1 sm:text-3xl text-xl max-md:text-center;
   }
 }
 
