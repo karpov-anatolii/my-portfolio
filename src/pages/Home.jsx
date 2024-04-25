@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useContext, useEffect, useRef, useState } from "react";
 import { PerspectiveCamera } from "three";
 import sakura from "../assets/sakura.mp3";
 import { HomeInfo, Loader } from "../components";
@@ -7,8 +7,14 @@ import { soundoff, soundon } from "../assets/icons";
 import { Bird, Island, Plane, Sky, SpaceStation, Staircase } from "../models";
 import Dashboard from "../components/Dashboard";
 import { Planet } from "../models/Planet";
+import Joystick from "../components/Joystick";
+import { DashboardContext } from "../components/DashboardContext";
 
 const Home = () => {
+  const isMobileDevice =
+    /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
   const audioRef = useRef(new Audio(sakura));
   audioRef.current.volume = 0.4;
   audioRef.current.loop = true;
@@ -16,13 +22,40 @@ const Home = () => {
   const [currentStage, setCurrentStage] = useState(1);
   const [isRotating, setIsRotating] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
+  // const { joystickXY, setJoystickXY } = useContext(DashboardContext);
+  // const joystickRef = useRef();
+  // const joystickRadius = 50;
+
+  // const handlePointerMove = (event) => {
+  //   event.stopPropagation();
+  //   const touch = event.touches ? event.touches[0] : event;
+  //   const clientX = touch.clientX;
+  //   const clientY = touch.clientY;
+  //   console.log("clientX", clientX, "clientY", clientY);
+  //   // const deltaX = clientX - centerX;
+  //   // const deltaY = clientY - centerY;
+  //   // const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+  //   // if (distance <= joystickRadius) {
+  //   //   speedRotationY.current = (deltaX / window.innerWidth) * koefRotation;
+  //   //   speedRotationX.current = (deltaY / window.innerHeight) * koefRotation;
+  //   // } else {
+  //   //   speedRotationY.current = 0;
+  //   //   speedRotationX.current = 0;
+  //   // }
+
+  //   // lastX.current = clientX;
+  //   // lastY.current = clientY;
+  // };
 
   useEffect(() => {
+    // joystickRef.current.addEventListener("touchmove", handlePointerMove);
     if (isPlayingMusic) {
       audioRef.current.play();
     }
 
     return () => {
+      // joystickRef.current.removeEventListener("touchmove", handlePointerMove);
       audioRef.current.pause();
     };
   }, [isPlayingMusic]);
@@ -69,6 +102,12 @@ const Home = () => {
         <Dashboard />
       </div>
 
+      {isMobileDevice && (
+        <div className="w-[100px] h-[100px] absolute bottom-[25%]  right-3 z-1 pointer-events-none flex items-center justify-center">
+          <Joystick />
+        </div>
+      )}
+
       <Canvas
         className={`w-full h-screen bg-transparent ${
           isRotating ? "cursor-grabbing" : "cursor-grab"
@@ -78,7 +117,7 @@ const Home = () => {
           far: 100000,
           fov: 70,
           aspect: window.innerWidth / window.innerHeight,
-          position: [0, 0, 0],
+          position: [0, 0, 2200],
         }}
       >
         {/* <PerspectiveCamera
@@ -104,8 +143,7 @@ const Home = () => {
             intensity={1}
           /> */}
 
-          {/* <Bird /> */}
-          <Sky isRotating={isRotating} />
+          <Sky isMobileDevice={isMobileDevice} />
           {/* <Island
             isRotating={isRotating}
             setIsRotating={setIsRotating}
@@ -121,18 +159,18 @@ const Home = () => {
             scale={biplaneScale}
           /> */}
           <SpaceStation
-            position={[0, 1000, -3600]}
+            position={[0, 1000, -1400]}
             rotation={[20, 50, 0]}
             scale={[2, 2, 2]}
           />
           <Staircase
-            position={[0, 0, 0]}
+            position={[0, 0, 2200]}
             rotation={[0, 0, 0]}
             scale={[50, 50, 50]}
           />
 
           <Planet
-            position={[0, 0, -4400]}
+            position={[0, 0, -2200]}
             rotation={[0, 0, 0]}
             scale={[1000, 1000, 1000]}
           />

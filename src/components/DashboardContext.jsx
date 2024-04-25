@@ -8,7 +8,8 @@ export const DashboardProvider = ({ children }) => {
   const [fly, setFly] = useState(false);
   const [orbitMode, setOrbitMode] = useState(false);
   const [speed, setSpeed] = useState(0);
-  const [location, setLocation] = useState([0, 0, 0]);
+  const [location, setLocation] = useState([0, 0, 2200]);
+  const [joystickXY, setJoystickXY] = useState({ x: 0, y: 0 });
   return (
     <DashboardContext.Provider
       value={{
@@ -20,6 +21,8 @@ export const DashboardProvider = ({ children }) => {
         setSpeed,
         location,
         setLocation,
+        joystickXY,
+        setJoystickXY,
       }}
     >
       {children}

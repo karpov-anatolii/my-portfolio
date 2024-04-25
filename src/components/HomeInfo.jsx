@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { arrow } from "../assets/icons";
 import { useState } from "react";
+import { closeMenu } from "../assets/icons";
 
 const HomeInfo = ({ currentStage }) => {
   const [isDeactive, setIsDeactive] = useState(false);
@@ -21,7 +22,7 @@ const HomeInfo = ({ currentStage }) => {
         onClick={(e) => handleClick(e)}
       >
         <img
-          src="/src/assets/icons/x-mark.svg"
+          src={closeMenu}
           alt="close"
           width={24}
           height={24}
@@ -37,8 +38,8 @@ const HomeInfo = ({ currentStage }) => {
           Now you are in my portfolio. You are actually in a spacecraft, which
           is inside a huge staircase. Why inside a staircase? Because for many
           years, I designed concrete stairs. But now I'm moving on to something
-          new and more exciting. So, push the start button and explore my
-          space-site.
+          new and more exciting. So, push the start button, accelerate the
+          speed, and explore my space.
         </p>
       </div>
     );

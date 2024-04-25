@@ -8,7 +8,8 @@ import { DashboardContext } from "../components/DashboardContext";
 import { useContext } from "react";
 
 // 3D Model from: https://sketchfab.com/3d-models/phoenix-bird-844ba0cf144a413ea92c779f18912042
-export function Sky({ isRotating }) {
+export function Sky({ isMobileDevice }) {
+  
   const { gl, viewport, camera } = useThree();
 
   const sky = useGLTF(skyScene); // sky={nodes, materials, animations, scene, animationsMap, animationsRoot}
@@ -20,6 +21,13 @@ export function Sky({ isRotating }) {
   const degreeGamma = useRef(0);
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
+  const joystickCenterX = Math.round((window.innerWidth / 10) * 8.5);
+  const joystickCenterY = Math.round((window.innerHeight / 10) * 7);
+  const joystickRadius = 50;
+  const joystickMinX = joystickCenterX - joystickRadius;
+  const joystickMaxX = joystickCenterX + joystickRadius;
+  const joystickMinY = joystickCenterY - joystickRadius;
+  const joystickMaxY = joystickCenterY + joystickRadius;
   const koefRotation = 0.01;
   const speedRotationX = useRef(0);
   const speedRotationY = useRef(0);
@@ -53,11 +61,6 @@ export function Sky({ isRotating }) {
     setIsMouseClick(false);
   }
 
-  // const handleMouseDown = (event) => {
-  //   event.stopPropagation();
-  //   setFly(!fly);
-  // };
-
   const handleContextMenu = (event) => {
     event.stopPropagation();
     event.preventDefault();
@@ -80,11 +83,44 @@ export function Sky({ isRotating }) {
     const clientY = event.touches ? event.touches[0].clientY : event.clientY;
     lastX.current = clientX;
     lastY.current = clientY;
-    speedRotationY.current =
-      ((lastX.current - centerX) / window.innerWidth) * koefRotation;
+    console.log(
+      "lastX=",
+      lastX.current,
+      "lastY=",
+      lastY.current,
+      "joystickCenterX=",
+      joystickCenterX,
+      "joystickCenterY=",
+      joystickCenterY,
+      "joystickRadius=",
+      joystickRadius
+    );
+    if (isMobileDevice) {
+      speedRotationY.current =
+        ((Math.max(joystickMinX, Math.min(lastX.current, joystickMaxX)) -
+          joystickCenterX) /
+          joystickRadius) *
+        koefRotation;
+      // Normalize  lastY.current values to be in the range [joystickMinY, joystickMaxY] with respect to joystickCenterY
+      speedRotationX.current =
+        ((Math.max(joystickMinY, Math.min(lastY.current, joystickMaxY)) -
+          joystickCenterY) /
+          joystickRadius) *
+        koefRotation;
 
-    speedRotationX.current =
-      ((lastY.current - centerY) / window.innerHeight) * koefRotation;
+      console.log(
+        ((Math.max(joystickMinX, Math.min(lastX.current, joystickMaxX)) -
+          joystickCenterX) /
+          joystickRadius) *
+          koefRotation
+      );
+    } else {
+      speedRotationY.current =
+        ((lastX.current - centerX) / window.innerWidth) * koefRotation;
+
+      speedRotationX.current =
+        ((lastY.current - centerY) / window.innerHeight) * koefRotation;
+    }
   };
 
   function handleOrientation(event) {

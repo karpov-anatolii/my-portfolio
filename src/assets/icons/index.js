@@ -35,8 +35,16 @@ import _3dmax from "./3dmax.svg";
 import figma from "./figma.svg";
 import blender from "./blender.svg";
 import archicad from "./archicad.svg";
+import menuSmartphone from "./menu-smartphone.svg";
+import closeMenu from "./close-menu.svg";
+import arrowsOut from "./arrows-out.svg";
+import arrowsIn from "./arrows-in.svg";
 
 export {
+  arrowsIn,
+  arrowsOut,
+  closeMenu,
+  menuSmartphone,
   archicad,
   blender,
   figma,

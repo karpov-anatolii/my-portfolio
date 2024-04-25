@@ -1,27 +1,61 @@
 import React from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import {
+  menuSmartphone,
+  closeMenu,
+  arrowsIn,
+  arrowsOut,
+} from "../assets/icons";
 
 const MobileNav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const handlerToggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleToggleFullscreen = () => {
+    const element = document.documentElement;
+    if (!isFullscreen) {
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+    setIsFullscreen(!isFullscreen);
   };
 
   return (
     <>
       <nav className="mobile-nav  justify-end">
-        <div className="">
+        <div className="flex items-center gap-6">
+          <div>
+            <img
+              src={isFullscreen ? arrowsIn : arrowsOut}
+              alt="fullscreen toggle"
+              width={30}
+              height={30}
+              onClick={handleToggleFullscreen}
+            />
+          </div>
           <div
             onClick={handlerToggleMobileMenu}
             className="menu-icon cursor-pointer"
           >
             <img
-              src={`${
-                isMobileMenuOpen
-                  ? "/src/assets/icons/close-menu.svg"
-                  : "/src/assets/icons/menu-smartphone.svg"
-              }`}
+              src={`${isMobileMenuOpen ? closeMenu : menuSmartphone}`}
               width={24}
               height={24}
               alt=""

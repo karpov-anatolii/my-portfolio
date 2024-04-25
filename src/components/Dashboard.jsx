@@ -35,7 +35,7 @@ const Dashboard = () => {
   };
   const handleLocation = (e) => {
     e.stopPropagation();
-    setLocation([0, 0, 0]);
+    setLocation([0, 0, 2200]);
     setOrbitMode(false);
     setFly(false);
     setSpeed(0);
