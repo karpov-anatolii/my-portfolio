@@ -43,7 +43,7 @@ const Dashboard = () => {
 
   return (
     <div
-      className={`hologram flex flex-col gap-3 rounded-lg shadow-lg sm:p-4 p-2`}
+      className={`hologram flex flex-col gap-1 rounded-lg shadow-lg sm:p-4 p-2`}
     >
       <div className="flex sm:text-lg text-sm gap-3">
         <button

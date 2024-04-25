@@ -9,7 +9,6 @@ import { useContext } from "react";
 
 // 3D Model from: https://sketchfab.com/3d-models/phoenix-bird-844ba0cf144a413ea92c779f18912042
 export function Sky({ isMobileDevice }) {
-  
   const { gl, viewport, camera } = useThree();
 
   const sky = useGLTF(skyScene); // sky={nodes, materials, animations, scene, animationsMap, animationsRoot}
@@ -67,6 +66,13 @@ export function Sky({ isMobileDevice }) {
     setOrbitMode(!orbitMode);
   };
 
+  const handlePointerUp = (event) => {
+    if (!isMobileDevice) return;
+    event.stopPropagation();
+    event.preventDefault();
+    speedRotationY.current = 0;
+    speedRotationX.current = 0;
+  };
   const handleWheel = (event) => {
     if (!fly) return;
     if (event.deltaY > 0 && speed - acceleration > -100) {
@@ -107,13 +113,6 @@ export function Sky({ isMobileDevice }) {
           joystickCenterY) /
           joystickRadius) *
         koefRotation;
-
-      console.log(
-        ((Math.max(joystickMinX, Math.min(lastX.current, joystickMaxX)) -
-          joystickCenterX) /
-          joystickRadius) *
-          koefRotation
-      );
     } else {
       speedRotationY.current =
         ((lastX.current - centerX) / window.innerWidth) * koefRotation;
@@ -122,19 +121,6 @@ export function Sky({ isMobileDevice }) {
         ((lastY.current - centerY) / window.innerHeight) * koefRotation;
     }
   };
-
-  function handleOrientation(event) {
-    const { beta, gamma } = event;
-    // event.beta represents the front-to-back tilt in degrees
-    // event.gamma represents the left-to-right tilt in degrees
-    // Normalize beta and gamma values to be in the range [-90, 90] degrees
-    degreeBeta.current = Math.max(-90, Math.min(beta, 90));
-    degreeGamma.current = Math.max(-90, Math.min(gamma, 90));
-
-    // Calculate rotation based on beta and gamma values
-    speedRotationY.current = (degreeGamma.current / 90) * koefRotation;
-    speedRotationX.current = (degreeBeta.current / 90) * koefRotation;
-  }
 
   useEffect(() => {
     if (fly) camSpeed = speed;
@@ -145,9 +131,9 @@ export function Sky({ isMobileDevice }) {
     canvas.addEventListener("contextmenu", handleContextMenu);
     window.addEventListener("wheel", handleWheel);
     canvas.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("deviceorientation", handleOrientation);
+
     // canvas.addEventListener("pointerdown", handlePointerDown);
-    // canvas.addEventListener("pointerup", handlePointerUp);
+    canvas.addEventListener("pointerup", handlePointerUp);
     // canvas.addEventListener("pointermove", handlePointerMove);
     // window.addEventListener("keydown", handleKeyDown);
     // window.addEventListener("keyup", handleKeyUp);
@@ -162,9 +148,9 @@ export function Sky({ isMobileDevice }) {
       canvas.removeEventListener("contextmenu", handleContextMenu);
       window.removeEventListener("wheel", handleWheel);
       canvas.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("deviceorientation", handleOrientation);
+
       // canvas.removeEventListener("pointerdown", handlePointerDown); // Pointer Events API
-      // canvas.removeEventListener("pointerup", handlePointerUp);
+      canvas.removeEventListener("pointerup", handlePointerUp);
       // canvas.removeEventListener("pointermove", handlePointerMove);
       // window.removeEventListener("keydown", handleKeyDown);
       // window.removeEventListener("keyup", handleKeyUp);

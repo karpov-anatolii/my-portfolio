@@ -8,7 +8,6 @@ import { Bird, Island, Plane, Sky, SpaceStation, Staircase } from "../models";
 import Dashboard from "../components/Dashboard";
 import { Planet } from "../models/Planet";
 import Joystick from "../components/Joystick";
-import { DashboardContext } from "../components/DashboardContext";
 
 const Home = () => {
   const isMobileDevice =
@@ -98,7 +97,7 @@ const Home = () => {
         {currentStage && <HomeInfo currentStage={currentStage} />}
       </div>
 
-      <div className="absolute bottom-[10%] max-sm:bottom-[5%]  left-0 right-0 z-10 flex items-center justify-center">
+      <div className="absolute bottom-[10%] max-sm:bottom-[2%]  left-0 right-0 z-10 flex items-center justify-center">
         <Dashboard />
       </div>
 
@@ -117,7 +116,7 @@ const Home = () => {
           far: 100000,
           fov: 70,
           aspect: window.innerWidth / window.innerHeight,
-          position: [0, 0, 2200],
+          position: [0, 0, 0],
         }}
       >
         {/* <PerspectiveCamera
