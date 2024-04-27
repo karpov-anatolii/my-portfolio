@@ -45,7 +45,7 @@ export function Sky({ isMobileDevice }) {
   } = useContext(DashboardContext);
   let camSpeed = speed;
   const [isMouseClick, setIsMouseClick] = useState(false);
-  const maxRadiusCameraPosition = 4500;
+  const maxRadiusCameraPosition = 6500;
   const targetCameraPosition = [0, 0, 0];
 
   function handleMouseDown() {
@@ -168,7 +168,7 @@ export function Sky({ isMobileDevice }) {
   });
 
   return (
-    <mesh ref={skyRef} scale={[1000, 1000, 1000]} position={[0, 0, 0]}>
+    <mesh ref={skyRef} scale={[1500, 1500, 1500]} position={[0, 0, 0]}>
       <primitive
         object={sky.scene}
         // onPointerMove={(event) => handlePointerMove(event)}
