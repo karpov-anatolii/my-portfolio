@@ -12,7 +12,7 @@ export function Staircase({ position, ...props }) {
   useFrame(({ clock, camera }) => {
     // Update the Y position to simulate bird-like motion using a sine wave
     // ref.current.position.y = Math.sin(clock.elapsedTime) * 0.2;
-    ref.current.rotation.y += 0.02;
+    ref.current.rotation.y += 0.015;
     // ref.current.position.z += 1;
     // if (hovered) {
     //   ref.current.position.x += 10;

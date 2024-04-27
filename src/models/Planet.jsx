@@ -30,13 +30,6 @@ export function Planet({ position, ...props }) {
         onPointer
       />
     </mesh>
-    // <group {...props} position={position} ref={ref} dispose={null}>
-    //   <mesh
-    //     geometry={nodes.Stair_1_curv_tread.geometry}
-    //     material={materials["Material.004"]}
-    //     scale={1}
-    //   />
-    // </group>
   );
 }
 

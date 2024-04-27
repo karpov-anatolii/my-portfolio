@@ -1,17 +1,28 @@
 import { Link } from "react-router-dom";
 
 import { arrow } from "../assets/icons";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { closeMenu } from "../assets/icons";
+import { DashboardContext } from "./DashboardContext";
 
 const HomeInfo = ({ currentStage }) => {
-  const [isDeactive, setIsDeactive] = useState(false);
-
+  const [isDeactive, setIsDeactive] = useState(true);
+  const { speed } = useContext(DashboardContext);
   const handleClick = (e) => {
     e.stopPropagation();
 
     setIsDeactive(!isDeactive);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsDeactive(false);
+    }, 4000);
+  }, []);
+
+  useEffect(() => {
+    if (speed !== 0) setIsDeactive(true);
+  }, [speed]);
 
   if (currentStage === 1)
     return (
@@ -28,18 +39,16 @@ const HomeInfo = ({ currentStage }) => {
           height={24}
           className="absolute top-2 right-2 w-[24px] h-[24px] cursor-pointer pointer-events-auto"
         />
-        <h1 className="sm:text-xl sm:leading-snug text-sm text-center  py-2 px-1 text-white ">
-          Hi, I'm
-          <span className="font-semibold mx-2 text-purple-600">Anatolii</span>
-          👋
+        <h1 className="sm:text-xl sm:leading-snug text-sm text-center font-bold drop-shadow-lg py-2 px-1 text-white ">
+          Hi, I'm Anatolii 👋
           <br />A Full Stack Developer from Ukraine 🇺🇦
         </h1>
         <p className="sm:text-base sm:leading-slug text-xs  text-center  py-2 px-1 ">
-          Now you are in my portfolio. You are actually in a spacecraft, which
-          is inside a huge staircase. Why inside a staircase? Because for many
-          years, I designed concrete stairs. But now I'm moving on to something
-          new and more exciting. So, push the start button, accelerate the
-          speed, and explore my space.
+          I'm open to creating new stunning projects. Before you review my
+          portfolio, I invite you to enjoy driving this spacecraft and explore
+          space. Just click the Start button (left mouse click) and increase
+          speed (mouse scrolling). Use the Orbit button (right mouse click) to
+          view objects from their orbits. Welcome to my Portfolio!
         </p>
       </div>
     );

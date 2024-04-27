@@ -89,18 +89,7 @@ export function Sky({ isMobileDevice }) {
     const clientY = event.touches ? event.touches[0].clientY : event.clientY;
     lastX.current = clientX;
     lastY.current = clientY;
-    console.log(
-      "lastX=",
-      lastX.current,
-      "lastY=",
-      lastY.current,
-      "joystickCenterX=",
-      joystickCenterX,
-      "joystickCenterY=",
-      joystickCenterY,
-      "joystickRadius=",
-      joystickRadius
-    );
+
     if (isMobileDevice) {
       speedRotationY.current =
         ((Math.max(joystickMinX, Math.min(lastX.current, joystickMaxX)) -
@@ -131,15 +120,7 @@ export function Sky({ isMobileDevice }) {
     canvas.addEventListener("contextmenu", handleContextMenu);
     window.addEventListener("wheel", handleWheel);
     canvas.addEventListener("pointermove", handlePointerMove);
-
-    // canvas.addEventListener("pointerdown", handlePointerDown);
     canvas.addEventListener("pointerup", handlePointerUp);
-    // canvas.addEventListener("pointermove", handlePointerMove);
-    // window.addEventListener("keydown", handleKeyDown);
-    // window.addEventListener("keyup", handleKeyUp);
-    // canvas.addEventListener("touchstart", handleTouchStart);
-    // canvas.addEventListener("touchend", handleTouchEnd);
-    // canvas.addEventListener("touchmove", handleTouchMove);
 
     // Remove event listeners when component unmounts
     return () => {
@@ -148,15 +129,7 @@ export function Sky({ isMobileDevice }) {
       canvas.removeEventListener("contextmenu", handleContextMenu);
       window.removeEventListener("wheel", handleWheel);
       canvas.removeEventListener("pointermove", handlePointerMove);
-
-      // canvas.removeEventListener("pointerdown", handlePointerDown); // Pointer Events API
       canvas.removeEventListener("pointerup", handlePointerUp);
-      // canvas.removeEventListener("pointermove", handlePointerMove);
-      // window.removeEventListener("keydown", handleKeyDown);
-      // window.removeEventListener("keyup", handleKeyUp);
-      // canvas.removeEventListener("touchstart", handleTouchStart);
-      // canvas.removeEventListener("touchend", handleTouchEnd);
-      // canvas.removeEventListener("touchmove", handleTouchMove);
     };
     //}, [gl, handlePointerMove, fly]);
   }, [gl, handlePointerMove, fly, orbitMode, speed]);

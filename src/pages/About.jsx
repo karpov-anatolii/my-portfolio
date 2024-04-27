@@ -28,9 +28,11 @@ const About = () => {
           <p>
             I am a dedicated and passionate Full Stack Developer with experience
             ranging from planning web applications to hosting them in the cloud
-            and conducting real-user testing. I have a solid technical
-            background and an ability to accurately discover client needs,
-            ensuring consistent and high-quality results.
+            and conducting real-user testing. My strengths lie in rapidly
+            learning new material and implementing new knowledge in real-world
+            applications. I am proficient in several 3D modeling programs, such
+            as ArchiCAD, 3ds Max, and Blender, which allow me to create
+            stunning, standalone websites.
           </p>
         </div>
 
